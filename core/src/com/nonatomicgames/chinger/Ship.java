@@ -21,6 +21,7 @@ public class Ship {
     public static final int RIGHT_DIRECTION = 1;
     public static final int DOWN_DIRECTION = 2;
     public static final int UP_DIRECTION = 3;
+    public static final int RIGHT_UP_DIRECTION = 4;
 
     public Vector2 position = new Vector2();
 
@@ -67,6 +68,10 @@ public class Ship {
             currentDirection = DOWN_DIRECTION;
             this.velocity.x = 0;
             this.velocity.y = -2;
+        } else if (Gdx.input.isKeyPressed(Input.Keys.NUM_9)) {
+            currentDirection = RIGHT_UP_DIRECTION;
+            this.velocity.x = 2;
+            this.velocity.y = 2;
         } else if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
             currentDirection = UP_DIRECTION;
             this.velocity.x = 0;
