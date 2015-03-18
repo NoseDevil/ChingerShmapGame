@@ -33,6 +33,8 @@ public class Ship {
     private float timeFromLastShot = 0f;
 
     private int currentDirection;
+    private int nextInt;
+    private int lastWeapon=2;
     private Shot[] currentShots;
     public LinkedList<Shot> shots = new LinkedList<Shot>();
 
@@ -77,20 +79,20 @@ public class Ship {
             this.velocity.y = 2;
         } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && Gdx.input.isKeyPressed(Input.Keys.UP)&& !Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
             currentDirection = RIGHT_UP_DIRECTION;
-            this.velocity.x = 2;
-            this.velocity.y = 2;
+            this.velocity.x = 1.4f;
+            this.velocity.y = 1.4f;
         } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && !Gdx.input.isKeyPressed(Input.Keys.UP)&& Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
             currentDirection = RIGHT_DOWN_DIRECTION;
-            this.velocity.x = 2;
-            this.velocity.y = -2;
+            this.velocity.x = 1.4f;
+            this.velocity.y = -1.4f;
         } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && Gdx.input.isKeyPressed(Input.Keys.UP)&& !Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
             currentDirection = LEFT_UP_DIRECTION;
-            this.velocity.x = -2;
-            this.velocity.y = 2;
+            this.velocity.x = -1.4f;
+            this.velocity.y = 1.4f;
         } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && !Gdx.input.isKeyPressed(Input.Keys.UP)&& Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
             currentDirection = LEFT_DOWN_DIRECTION;
-            this.velocity.x = -2;
-            this.velocity.y = -2;
+            this.velocity.x = -1.4f;
+            this.velocity.y = -1.4f;
         }
 
         for (int shotIndex = shots.size() - 1; shotIndex >= 0; shotIndex--) {
@@ -102,13 +104,25 @@ public class Ship {
             }
         }
 
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SHIFT_LEFT) && nextInt!=lastWeapon){
+            nextInt++;
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.SHIFT_LEFT) && nextInt == lastWeapon) nextInt = 0;
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && timeFromLastShot >= SHOT_PAUSE) {
             Shot nextShot = null;
-            if (rnd.nextBoolean()) {
+
+            /*if (nextInt == 1) {
                 nextShot = new SpreadShot();
-            } else {
+            } else  if (nextInt == 0) {
                 nextShot = new SimpleShot();
+            }*/
+
+            switch (nextInt){
+                case 0: nextShot = new SimpleShot();break;
+                case 1: nextShot = new SpreadShot();break;
+                case 2: nextShot = new HomingShot();break;
+
             }
 
             nextShot.shoot(this.position.x + 24, this.position.y + 12);

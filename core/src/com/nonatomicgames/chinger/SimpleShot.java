@@ -11,6 +11,7 @@ public class SimpleShot implements Shot {
     private static final int VELOCITY = 5;
     private static final float UPDATING_TIME = 0.02f;
 
+
     public boolean wasShoted = false;
     public boolean enemyShot = false;
 

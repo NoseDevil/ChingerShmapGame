@@ -14,6 +14,7 @@ public class Level {
 
     public float lastTimeOfCreatingEnemy = 0f;
     public float nextEnemyIn = 0f;
+    public int horizontalSpawn=0;
 
     public Ship ship;
     private SpriteBatch batcher;
@@ -33,7 +34,7 @@ public class Level {
     }
 
     private float generateTimeToNextEnemy() {
-        return 0.5f;// + rnd.nextInt(4);
+        return 0.7f;// + rnd.nextInt(4);
     }
 
     private void initEnemies() {
@@ -83,24 +84,33 @@ public class Level {
 
         this.lastTimeOfCreatingEnemy += delta;
         if (this.lastTimeOfCreatingEnemy > this.nextEnemyIn) {
-            switch (rnd.nextInt()%4) {
+            switch (horizontalSpawn) {
                 case 0: {
-                    this.enemies.add(EnemyFactory.getTimerBombEnemy(this));
+                    this.enemies.add(EnemyFactory.getUpDiagonalEnemy(this, Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT));
+                    horizontalSpawn++;
                     break;
                 }
                 case 1: {
-                    this.enemies.add(EnemyFactory.getSinEnemy(this));
+                    this.enemies.add(EnemyFactory.getUpDiagonalEnemy(this, Constants.WORLD_WIDTH-40, Constants.WORLD_HEIGHT));
+                    horizontalSpawn++;
                     break;
                 }
                 case 2: {
-                    this.enemies.add(EnemyFactory.getUpDiagonalEnemy(this));
+                    this.enemies.add(EnemyFactory.getUpDiagonalEnemy(this, Constants.WORLD_WIDTH-80, Constants.WORLD_HEIGHT));
+                    horizontalSpawn++;
                     break;
                 }
                 case 3: {
-                    this.enemies.add(EnemyFactory.getDownDiagonalEnemy(this));
+                    this.enemies.add(EnemyFactory.getUpDiagonalEnemy(this, Constants.WORLD_WIDTH-120, Constants.WORLD_HEIGHT));
+                    horizontalSpawn++;
                     break;
                 }
+                default: {
+                    horizontalSpawn = 0;
+                }
             }
+
+
             this.lastTimeOfCreatingEnemy = 0f;
         }
 
