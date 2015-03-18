@@ -22,6 +22,9 @@ public class Ship {
     public static final int DOWN_DIRECTION = 2;
     public static final int UP_DIRECTION = 3;
     public static final int RIGHT_UP_DIRECTION = 4;
+    public static final int LEFT_UP_DIRECTION = 5;
+    public static final int RIGHT_DOWN_DIRECTION = 6;
+    public static final int LEFT_DOWN_DIRECTION = 7;
 
     public Vector2 position = new Vector2();
 
@@ -56,26 +59,38 @@ public class Ship {
         this.velocity.y = 0;
         this.timeFromLastShot += delta;
 
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && !Gdx.input.isKeyPressed(Input.Keys.UP)&& !Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
             currentDirection = LEFT_DIRECTION;
             this.velocity.x = -2;
             this.velocity.y = 0;
-        } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+        } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && !Gdx.input.isKeyPressed(Input.Keys.UP)&& !Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
             currentDirection = RIGHT_DIRECTION;
             this.velocity.x = 2;
             this.velocity.y = 0;
-        } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+        } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN) && !Gdx.input.isKeyPressed(Input.Keys.RIGHT) && !Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             currentDirection = DOWN_DIRECTION;
             this.velocity.x = 0;
             this.velocity.y = -2;
-        } else if (Gdx.input.isKeyPressed(Input.Keys.NUM_9)) {
-            currentDirection = RIGHT_UP_DIRECTION;
-            this.velocity.x = 2;
-            this.velocity.y = 2;
-        } else if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+        } else if (Gdx.input.isKeyPressed(Input.Keys.UP) && !Gdx.input.isKeyPressed(Input.Keys.RIGHT) && !Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             currentDirection = UP_DIRECTION;
             this.velocity.x = 0;
             this.velocity.y = 2;
+        } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && Gdx.input.isKeyPressed(Input.Keys.UP)&& !Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+            currentDirection = RIGHT_UP_DIRECTION;
+            this.velocity.x = 2;
+            this.velocity.y = 2;
+        } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && !Gdx.input.isKeyPressed(Input.Keys.UP)&& Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+            currentDirection = RIGHT_DOWN_DIRECTION;
+            this.velocity.x = 2;
+            this.velocity.y = -2;
+        } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && Gdx.input.isKeyPressed(Input.Keys.UP)&& !Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+            currentDirection = LEFT_UP_DIRECTION;
+            this.velocity.x = -2;
+            this.velocity.y = 2;
+        } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && !Gdx.input.isKeyPressed(Input.Keys.UP)&& Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+            currentDirection = LEFT_DOWN_DIRECTION;
+            this.velocity.x = -2;
+            this.velocity.y = -2;
         }
 
         for (int shotIndex = shots.size() - 1; shotIndex >= 0; shotIndex--) {
